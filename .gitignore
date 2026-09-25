@@ -1,0 +1,7 @@
+__pycache__/
+.vscode/
+venv/
+*.orig
+assignment3/
+Information Retrieval - Lecture 3 (1).pdf
+lecture 3 in plaintext.txt
