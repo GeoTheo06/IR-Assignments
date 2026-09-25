@@ -74,14 +74,18 @@ def precision_at_k(retrieved_docs, relevant_docs, k):
     if k <= 0:
         return 0
 
+    top_k_docs = retrieved_docs[:k]
+
+    if len(top_k_docs) == 0:
+        return 0
+
     relevant_in_top_k = 0
 
-    for doc in retrieved_docs[:k]:
+    for doc in top_k_docs:
         if doc in relevant_docs:
             relevant_in_top_k += 1
 
-    # Missing ranks count as non-relevant, so the denominator stays k.
-    return relevant_in_top_k / k
+    return relevant_in_top_k / len(top_k_docs)
 
 
 def p_at_5(retrieved_docs, relevant_docs):
