@@ -1,0 +1,143 @@
+Running for query1_cache
+Number of search results: 7
+['https://people.ischool.berkeley.edu/~hearst/irbook/',
+ 'https://www.amazon.com/Modern-Information-Retrieval-Concepts-Technology/dp/0321416910',
+ 'https://dl.acm.org/doi/10.5555/553876',
+ 'https://www.researchgate.net/publication/2352627_Modern_Information_Retrieval',
+ 'http://web.cs.ucla.edu/~miodrag/cs259-security/baeza-yates99modern.pdf',
+ 'https://www.pearson.com/store/p/modern-information-retrieval-the-concepts-and-technology-behind-search/P100001960386/9780321416919',
+ 'http://grupoweb.upf.es/mir2ed/']
+Number of search results: 20
+['https://www.researchgate.net/publication/2352627_Modern_Information_Retrieval',
+ 'http://www.cs.columbia.edu/~gravano/Qual/Papers/singhal.pdf',
+ 'http://grupoweb.upf.edu/mir2ed/pdf/slides_chap01.pdf',
+ 'http://grupoweb.upf.edu/mir2ed/pdf/chapter15.pdf',
+ 'http://sifaka.cs.uiuc.edu/course/410s12/mir.pdf',
+ 'https://www.amazon.com/Modern-Information-Retrieval-Concepts-Technology/dp/0321416910',
+ 'https://www.just.edu.jo/~hmeidi/Teaching/CS721/slides_chap03.pdf',
+ 'http://ce.sharif.edu/courses/84-85/2/ce324/resources/root/lecture%20slides/01Introduction.ppt',
+ 'http://grupoweb.upf.es/mir2ed/',
+ 'https://nlp.stanford.edu/IR-book/',
+ 'http://ce.sharif.edu/courses/99-00/1/ce324-1/resources/root/Slides/Lect-13.pdf',
+ 'http://www.cs.ucr.edu/~vagelis/classes/FIU-CLASSES/COP6727/publications/IR%20Overview.pdf',
+ 'https://www.amazon.com/Introduction-Modern-Information-Retrieval-3rd/dp/1555707157',
+ 'https://www.sigir.org/files/museum/introduction_to_modern_information_retrieval/frontmatter.pdf',
+ 'https://www.csee.umbc.edu/~nicholas/676/mir2edSlides/slides_chap04.pdf',
+ 'https://homepages.dcc.ufmg.br/~nivio/cursos/ri08/transp/slideschap04c.pdf',
+ 'https://archive.org/details/moderninformatio0000baez',
+ 'https://github.com/ZahraFazel/Modern-Information-Retrieval',
+ 'https://www.csee.umbc.edu/~nicholas/676/mir2edSlides/slides_chap03.pdf',
+ 'https://github.com/SeyedAlirezaFatemi/modern-information-retrieval']
+Number of search results: 20
+['https://www.researchgate.net/publication/2352627_Modern_Information_Retrieval',
+ 'http://grupoweb.upf.edu/mir2ed/pdf/slides_chap01.pdf',
+ 'http://sifaka.cs.uiuc.edu/course/410s12/mir.pdf',
+ 'https://www.sigir.org/files/museum/introduction_to_modern_information_retrieval/frontmatter.pdf',
+ 'https://www.amazon.com/Modern-Information-Retrieval-Concepts-Technology/dp/0321416910',
+ 'https://www.csee.umbc.edu/~nicholas/676/mir2edSlides/slides_chap04.pdf',
+ 'http://grupoweb.upf.edu/mir2ed/pdf/chapter15.pdf',
+ 'http://www.just.edu.jo/~hmeidi/Teaching/CS721/slides_chap03.pdf',
+ 'https://www.amazon.com/Modern-Information-Retrieval-Yates/dp/8131709779',
+ 'http://ce.sharif.edu/courses/84-85/2/ce324/resources/root/lecture%20slides/01Introduction.ppt',
+ 'https://www.csee.umbc.edu/~nicholas/676/mir2edSlides/slides_chap12.pdf',
+ 'https://archive.org/details/moderninformatio0000baez',
+ 'https://dl.acm.org/doi/book/10.5555/1796408',
+ 'http://web.stanford.edu/class/cs276/',
+ 'https://www.goodreads.com/book/show/433444.Modern_Information_Retrieval',
+ 'https://www.goodreads.com/book/show/1818137.Introduction_to_Modern_Information_Retrieval',
+ 'https://sites.google.com/site/6dry7tf76y/ab7eh9i-4',
+ 'https://www.pearson.com/uk/educators/higher-education-educators/program/Baeza-Yates-Modern-Information-Retrieval-The-Concepts-and-Technology-behind-Search-2nd-Edition/PGM804983.html',
+ 'https://github.com/ZahraFazel/Modern-Information-Retrieval',
+ 'https://web2.aabu.edu.jo/tool/course_file/lec_notes/902333_01Introduction.ppt']
+Number of search results: 5
+['http://sifaka.cs.uiuc.edu/course/410s12/mir.pdf',
+ 'http://grupoweb.upf.edu/mir2ed/pdf/slides_chap01.pdf',
+ 'https://www.researchgate.net/publication/2352627_Modern_Information_Retrieval',
+ 'https://www.sigir.org/files/museum/introduction_to_modern_information_retrieval/frontmatter.pdf',
+ 'https://www.csee.umbc.edu/~nicholas/676/mir2edSlides/slides_chap04.pdf']
+
+The precision and recall scores for the various search algorithms with Google search as the baseline:
+google      ranking  ==>  precision: 1.0 	 recall: 1.0
+bing        ranking  ==>  precision: 0.15 	 recall: 0.43
+duckduckgo  ranking  ==>  precision: 0.1 	 recall: 0.29
+yahoo       ranking  ==>  precision: 0.2 	 recall: 0.14
+
+Plotting precision vs recall plots
+
+Computing the single valued summaries
+google        ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+bing          ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+duckduckgo    ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+yahoo         ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+
+Running for query2_cache
+Number of search results: 7
+['https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)',
+ 'https://nlp.stanford.edu/IR-book/html/htmledition/information-retrieval-system-evaluation-1.html',
+ 'https://amitness.com/2020/08/information-retrieval-evaluation/',
+ 'http://sifaka.cs.uiuc.edu/~wang296/Course/IR_Fall/docs/PDFs/Information%20Retrieval%20Evaluation.pdf',
+ 'http://informationr.net/ir/18-2/paper582.html',
+ 'https://upload.wikimedia.org/wikipedia/commons/1/17/Evaluation_of_information_retrieval_system_purpose_and_retrieval.pdf',
+ 'https://www.slideshare.net/somipam123456/evaluation-of-information-retrieval-system']
+Number of search results: 20
+['http://nlp.stanford.edu/IR-book/html/htmledition/evaluation-in-information-retrieval-1.html',
+ 'https://www.iro.umontreal.ca/~nie/IFT6255/IR-Evaluation.pdf',
+ 'http://people.cs.georgetown.edu/~nazli/classes/ir-Slides/Evaluation-13.pdf',
+ 'https://www.cambridge.org/core/books/introduction-to-information-retrieval/evaluation-in-information-retrieval/1DE7AC4EC9996792D8590212D735AF15',
+ 'https://nlp.stanford.edu/IR-book/html/htmledition/information-retrieval-system-evaluation-1.html',
+ 'https://www.slideshare.net/JosRamnRosViqueira/information-retrieval-evaluation-64158263',
+ 'https://amitness.com/2020/08/information-retrieval-evaluation/',
+ 'https://clgiles.ist.psu.edu/IST441/materials/powerpoint/eval-week3/retrieval-evaluation.ppt',
+ 'https://www.scribd.com/document/526097157/Ch5-Retrieval-Evaluation-2021',
+ 'https://ligiaprapta17.wordpress.com/2015/03/03/pengertian-information-retrieval-ir-peranan-ir-dan-contoh-contoh-ir/',
+ 'https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)',
+ 'https://www.researchgate.net/publication/221301028_Evaluation_of_Evaluation_in_Information_Retrieval',
+ 'https://www.researchgate.net/publication/220875658_Evaluation_in_Information_Retrieval',
+ 'https://www.slideshare.net/somipam123456/evaluation-of-information-retrieval-system',
+ 'http://fire.irsi.res.in/',
+ 'https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-6-per.pdf',
+ 'https://sigir.org/files/museum/introduction_to_modern_information_retrieval/chapter_5.pdf',
+ 'https://www.powershow.com/view/4e3e8-NGQ3N/Evaluation_of_Information_Retrieval_Systems_powerpoint_ppt_presentation',
+ 'https://library.oapen.org/handle/20.500.12657/41715',
+ 'https://link.springer.com/book/10.1007%2F978-3-030-22948-1']
+Number of search results: 20
+['https://www.iro.umontreal.ca/~nie/IFT6255/IR-Evaluation.pdf',
+ 'https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-in-information-retrieval-1.html',
+ 'https://nlp.stanford.edu/IR-book/html/htmledition/information-retrieval-system-evaluation-1.html',
+ 'https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-6-per.pdf',
+ 'http://people.cs.georgetown.edu/~nazli/classes/ir-Slides/Evaluation-13.pdf',
+ 'http://people.cs.georgetown.edu/~nazli/classes/ir-Slides/Evaluation-12.pdf',
+ 'https://clgiles.ist.psu.edu/IST441/materials/powerpoint/eval-week3/retrieval-evaluation.ppt',
+ 'https://www.slideshare.net/JosRamnRosViqueira/information-retrieval-evaluation-64158263',
+ 'https://amitness.com/2020/08/information-retrieval-evaluation/',
+ 'https://sniafas.medium.com/evaluating-information-retrieval-3975348ef97a',
+ 'https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)',
+ 'https://www.scribd.com/document/526097157/Ch5-Retrieval-Evaluation-2021',
+ 'https://sigir.org/files/museum/introduction_to_modern_information_retrieval/chapter_5.pdf',
+ 'https://cvlesalfabegues.com/search/evaluating-information-retrieval-systems/',
+ 'http://web.stanford.edu/class/cs276/19handouts/lecture8-evaluation-1per.pdf',
+ 'https://www.slideshare.net/somipam123456/evaluation-of-information-retrieval-system',
+ 'https://ils.unc.edu/courses/2017_fall/inls509_002/papers/FnTIR-Press-Kelly.pdf',
+ 'https://www.morganclaypool.com/doi/abs/10.2200/S00368ED1V01Y201105ICR019',
+ 'https://www.geeksforgeeks.org/what-is-information-retrieval/',
+ 'https://www.amazon.com/Information-Retrieval-Implementing-Evaluating-Engines/dp/0262528878']
+Number of search results: 5
+['http://people.cs.georgetown.edu/~nazli/classes/ir-Slides/Evaluation-13.pdf',
+ 'https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-6-per.pdf',
+ 'https://clgiles.ist.psu.edu/IST441/materials/powerpoint/eval-week3/retrieval-evaluation.ppt',
+ 'https://www.slideshare.net/JosRamnRosViqueira/information-retrieval-evaluation-64158263',
+ 'https://amitness.com/2020/08/information-retrieval-evaluation/']
+
+The precision and recall scores for the various search algorithms with Google search as the baseline:
+google      ranking  ==>  precision: 1.0 	 recall: 1.0
+bing        ranking  ==>  precision: 0.2 	 recall: 0.57
+duckduckgo  ranking  ==>  precision: 0.2 	 recall: 0.57
+yahoo       ranking  ==>  precision: 0.2 	 recall: 0.14
+
+Plotting precision vs recall plots
+
+Computing the single valued summaries
+google        ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+bing          ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+duckduckgo    ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+yahoo         ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
