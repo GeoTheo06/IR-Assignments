@@ -65,10 +65,10 @@ yahoo       ranking  ==>  precision: 0.2 	 recall: 0.14
 Plotting precision vs recall plots
 
 Computing the single valued summaries
-google        ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-bing          ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-duckduckgo    ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-yahoo         ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+google        ==>  f: 1.0 	 p@5: 1.0 	 p@7: 1.0 	 p@10: 0.7
+bing          ==>  f: 0.22 	 p@5: 0.2 	 p@7: 0.29 	 p@10: 0.3
+duckduckgo    ==>  f: 0.15 	 p@5: 0.4 	 p@7: 0.29 	 p@10: 0.2
+yahoo         ==>  f: 0.17 	 p@5: 0.2 	 p@7: 0.14 	 p@10: 0.1
 
 Running for query2_cache
 Number of search results: 7
@@ -137,7 +137,7 @@ yahoo       ranking  ==>  precision: 0.2 	 recall: 0.14
 Plotting precision vs recall plots
 
 Computing the single valued summaries
-google        ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-bing          ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-duckduckgo    ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
-yahoo         ==>  f: 0.0 	 p@5: 0.0 	 p@7: 0.0
+google        ==>  f: 1.0 	 p@5: 1.0 	 p@7: 1.0 	 p@10: 0.7
+bing          ==>  f: 0.3 	 p@5: 0.2 	 p@7: 0.29 	 p@10: 0.2
+duckduckgo    ==>  f: 0.3 	 p@5: 0.2 	 p@7: 0.14 	 p@10: 0.2
+yahoo         ==>  f: 0.17 	 p@5: 0.2 	 p@7: 0.14 	 p@10: 0.1

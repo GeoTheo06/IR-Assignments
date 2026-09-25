@@ -1,72 +1,101 @@
-## Experimental Setup & Precision-vs-Recall Evaluation
+# Retrieval Evaluation Report
 
-### 1. Experimental Setup
+## 1. Experimental setup
 
-To evaluate the performance of different web search engines, we used Google's top search results as our pseudo-ground truth (baseline) relevance set $R$, containing $\vert{}R\vert{} = 7$ relevant documents for each query. We evaluated three target search algorithms—Bing, DuckDuckGo, and Yahoo—against this baseline across two distinct search query caches (`query1_cache` and `query2_cache`).
+We evaluated Google, Bing, DuckDuckGo, and Yahoo for two queries:
 
-The evaluation pipeline performs the following steps:
+- Query 1: `Modern Information Retrieval`
+- Query 2: `information retrieval evaluation`
 
-1. **Result Extraction**: For a target search engine, the top $N$ retrieved URLs ($S$) are fetched from the respective JSON cache files ($N=20$ for Bing and DuckDuckGo; $N=5$ for Yahoo).
-2. **Precision & Recall Calculation**: For any prefix cutoff $k$, Precision ($P_k$) and Recall ($R_k$) are computed as:
+Google's first seven results are used as the relevance baseline. Bing and DuckDuckGo each have twenty retrieved results, while Yahoo has five. A document counts as relevant only when its URL exactly matches a URL in the Google baseline.
 
-$$P_k = \frac{\vert{}S_k \cap R\vert{}}{\vert{}S_k\vert{}}, \quad R_k = \frac{\vert{}S_k \cap R\vert{}}{\vert{}R\vert{}}$$
+## 2. Evaluation metrics
 
+### Precision and recall
 
-3. **11-Point Interpolation**: Standard recall levels are evaluated at 11 fixed thresholds $r \in \{0.0, 0.1, 0.2, \dots, 1.0\}$. The interpolated precision $P_{\text{interp}}(r)$ at recall level $r$ is defined as the maximum precision achieved at any recall level $r' \ge r$:
+For a retrieved set $A$ and relevance set $R$:
 
-$$P_{\text{interp}}(r) = \max_{r' \ge r} P(r')$$
+$$
+P = \frac{|A \cap R|}{|A|}, \qquad
+R = \frac{|A \cap R|}{|R|}.
+$$
 
+Precision is the fraction of retrieved documents that are relevant. Recall is the fraction of relevant documents that were retrieved.
 
+### Single-valued summaries
 
----
+The F-measure is the harmonic mean of precision and recall:
 
-### 2. Results & Plot Interpretation
+$$
+F = \frac{2PR}{P + R}.
+$$
 
-#### Query 1 (`query1_cache`)
+Precision at rank $k$ is:
 
-* **Google (Baseline)**: Acts as the ground truth reference ($P = 1.0, R = 1.0$). Its 11-point interpolated precision curve remains flat at $1.0$ across all recall levels $0.0 \le r \le 1.0$.
-* **Bing**: Achieves a overall precision of $0.15$ and a maximum recall of $0.43$ (retrieving 3 out of 7 baseline documents).
+$$
+P@k = \frac{|A_k \cap R|}{k},
+$$
 
+where $A_k$ contains the first $k$ ranks. Missing ranks are considered non-relevant when an engine returns fewer than $k$ results. P@5 and P@10 are required by the assignment. P@7 is also reported because it is included in the starter code.
 
-* *Plot Behavior*: The first relevant document appears at rank 7 ($P \approx 0.143, R \approx 0.143$), and the highest precision achieved for recall $\ge 0.143$ is $0.286$ (at rank 7 with 2 matches). Consequently, $P_{\text{interp}}(r) = 0.286$ for $r \in [0.0, 0.4]$, dropping to $0.0$ for $r \ge 0.5$.
+### 11-point interpolated precision–recall
 
+The standard recall levels are $0.0, 0.1, \ldots, 1.0$. At each standard recall level $r_j$, interpolated precision is the highest precision observed at any recall value greater than or equal to $r_j$:
 
-* **DuckDuckGo**: Reaches an overall precision of $0.10$ and maximum recall of $0.29$ (2 out of 7 baseline documents).
+$$
+P_{interp}(r_j) = \max_{r \ge r_j} P(r).
+$$
 
+If an engine does not reach a recall level, its interpolated precision at that level is zero.
 
-* *Plot Behavior*: Finds its first match earlier at rank 3 ($P \approx 0.333, R \approx 0.143$). Interpolated precision starts at $0.333$ for $r \in [0.0, 0.1]$, drops to $0.286$ for $r \in [0.2, 0.4]$, and falls to $0.0$ for $r \ge 0.5$.
+## 3. Scalar results
 
+### Query 1: Modern Information Retrieval
 
-* **Yahoo**: Retrieves 5 total results, returning 1 baseline match ($P = 0.20, R = 0.14$).
+| Engine | Precision | Recall | F | P@5 | P@7 | P@10 |
+|---|---:|---:|---:|---:|---:|---:|
+| Google (baseline) | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 0.70 |
+| Bing | 0.15 | 0.43 | 0.22 | 0.20 | 0.29 | 0.30 |
+| DuckDuckGo | 0.10 | 0.29 | 0.15 | 0.40 | 0.29 | 0.20 |
+| Yahoo | 0.20 | 0.14 | 0.17 | 0.20 | 0.14 | 0.10 |
 
+Bing has the highest recall and F-measure among the three engines being compared. It finds three of the seven Google documents. DuckDuckGo has the strongest P@5 because both of its matches occur within its first five results. Yahoo has the highest overall precision, but this is based on a short list of five results containing only one Google document, so its recall is low.
 
-* *Plot Behavior*: $P_{\text{interp}}(r) = 0.20$ for $r \in [0.0, 0.1]$, dropping to $0.0$ for all $r \ge 0.2$.
+### Query 2: information retrieval evaluation
 
+| Engine | Precision | Recall | F | P@5 | P@7 | P@10 |
+|---|---:|---:|---:|---:|---:|---:|
+| Google (baseline) | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 0.70 |
+| Bing | 0.20 | 0.57 | 0.30 | 0.20 | 0.29 | 0.20 |
+| DuckDuckGo | 0.20 | 0.57 | 0.30 | 0.20 | 0.14 | 0.20 |
+| Yahoo | 0.20 | 0.14 | 0.17 | 0.20 | 0.14 | 0.10 |
 
+Bing and DuckDuckGo have the same overall precision, recall, F-measure, P@5, and P@10. Each finds four of the seven Google documents. Bing has the better P@7 because two matching documents occur within its first seven positions, while DuckDuckGo has one. Yahoo again finds only one Google document and therefore has much lower recall and F-measure.
 
-#### Query 2 (`query2_cache`)
+Google's precision, recall, and F-measure are 1.00 because Google defines the relevance baseline. Its P@10 is 0.70 because only seven Google results are loaded and the three missing ranks count as non-relevant.
 
-* **Bing & DuckDuckGo**: Both algorithms achieve higher overlap with Google's baseline on Query 2, reaching a maximum recall of $0.57$ (4 out of 7 baseline documents) and an overall precision of $0.20$.
+## 4. Precision–recall results
 
+### Query 1
 
-* *Plot Behavior*: Both graphs stay above zero up to a recall of 0.5. After $r = 0.6$, the line drops straight to 0.0 because neither search engine found the last 3 Google baseline results.
+| Engine | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Google | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| Bing | 1.00 | 1.00 | 0.33 | 0.33 | 0.33 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| DuckDuckGo | 1.00 | 1.00 | 0.40 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| Yahoo | 0.33 | 0.33 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
+Bing reaches the highest recall of the three compared engines: $3/7 \approx 0.43$. Its curve therefore becomes zero at recall level 0.5. DuckDuckGo reaches $2/7 \approx 0.29$, and Yahoo reaches only $1/7 \approx 0.14$. DuckDuckGo retrieves both matching documents early, which explains its strong precision at the first recall levels despite its lower total recall.
 
-* **Yahoo**: Produces 1 matching result out of 5 retrieved documents ($P = 0.20, R = 0.14$), starts with a flat line at $0.20$ for $r \in [0.0, 0.1]$ before dropping to $0.0$.
+### Query 2
 
+| Engine | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Google | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| Bing | 0.29 | 0.29 | 0.29 | 0.29 | 0.29 | 0.29 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| DuckDuckGo | 0.33 | 0.33 | 0.27 | 0.27 | 0.27 | 0.25 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| Yahoo | 0.20 | 0.20 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
+Bing and DuckDuckGo both reach $4/7 \approx 0.57$ recall, so their curves become zero at recall level 0.6. DuckDuckGo starts with higher interpolated precision, while Bing maintains approximately 0.29 through recall level 0.5. Yahoo again reaches only about 0.14 recall.
 
----
-
-### 3. Boundary Cases & Special Considerations
-
-1. **Interpolation at $r = 0.0$**:
-* According to standard Information Retrieval evaluation conventions, $P_{\text{interp}}(0.0)$ represents the maximum precision observed across *all* recall levels $r' \ge 0.0$. This ensures that algorithms finding relevant documents early in the ranking are rewarded with higher starting precision values.
-
-
-2. **Unreached Recall Levels ($r > R_{\text{max}}$)**:
-* When a search engine fails to achieve high recall levels (e.g., $r \ge 0.6$ for Bing on Query 2), no retrieved points satisfy the condition $r' \ge r$. In our implementation, `precisions` evaluates to an empty list, which safely defaults to $P_{\text{interp}}(r) = 0.0$.
-
-
-3. **Monotonic Non-Increasing Property**:
-* The 11-point interpolated precision curve is guaranteed to be non-increasing ($P_{\text{interp}}(r_a) \ge P_{\text{interp}}(r_b)$ for $r_a < r_b$). The empirical plots confirm this behavior across all algorithms and queries.
+The interpolated curves are non-increasing because each point uses the maximum precision available at that recall level or any higher recall level. The generated figures are stored in the `plots` directory.
