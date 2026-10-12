@@ -1,0 +1,20 @@
+# Local notes and temporary setup files.
+TEAMMATE_2.md
+temp dont push
+# Keep the generated notebook local, as requested.
+search example/Part B.ipynb
+.venv/
+venv/
+nltk_data/
+.ipynb_checkpoints/
+
+# Generated Python files and macOS archive metadata.
+__pycache__/
+*.pyc
+.DS_Store
+__MACOSX/
+
+# Local assistant configuration.
+.agents/
+.codex/
+.aws/
