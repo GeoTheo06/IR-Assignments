@@ -17,7 +17,34 @@ inv_ind = InvertedIndex()
 # ### Add documents below, read_data scans directory passed for any files ending in ".txt" and reads them in as a single string.
 
 # %%
-documents = read_data("./data")
+
+import builtins
+
+# Safely override open() for text mode read operations only
+_original_open = builtins.open
+
+
+def _utf8_open(
+    file,
+    mode='r',
+    buffering=-1,
+    encoding=None,
+    errors=None,
+    newline=None,
+    closefd=True,
+    opener=None,
+):
+  # Only set utf-8 encoding if opening in text mode ('r') and NOT binary mode ('b')
+  if encoding is None and 'r' in mode and 'b' not in mode:
+    encoding = 'utf-8'
+  return _original_open(
+      file, mode, buffering, encoding, errors, newline, closefd, opener
+  )
+
+
+builtins.open = _utf8_open
+
+documents = read_data("./shakespeare")
 print(documents)
 
 # %% [markdown]

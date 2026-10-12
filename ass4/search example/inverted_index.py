@@ -113,7 +113,7 @@ class InvertedIndex:
     
     # Sanity check to ensure unique document being added
     if doc_id in self.docs:
-    	raise Exception("Document [" + doc_id + "] already exists in the Inverted Index.")
+      raise Exception("Document [" + doc_id + "] already exists in the Inverted Index.")
       
     # Tokenize and process text.  This is where any text pre-processing
     # will take place.
@@ -299,7 +299,7 @@ class InvertedIndex:
           item = next(iter)
           documents.append(item[0])
         except StopIteration: 
-      	  break
+          break
     except:
       return set()
 
@@ -331,7 +331,7 @@ class InvertedIndex:
           item = next(iter)
           list_items.append(item)
         except StopIteration: 
-      	  break
+          break
     except:
       return [ ]
 
@@ -511,7 +511,7 @@ class InvertedIndex:
           else:
             A[i][j] = item[1]
         except StopIteration: 
-      	  break
+            break
             
     # Store this internally for future reference for vector space search
     self.A = A
@@ -532,7 +532,7 @@ class InvertedIndex:
   def get_doc_vector(self, doc_ind):
     # Populate the vector assuming A has been calculated
     if self.A == None:
-    	return None
+      return None
     	
     # We are essentially slicing a vector out that represents a document in the A matrix.
     v = [self.A[i][doc_ind] for i in range(self.get_total_terms())]
@@ -620,22 +620,22 @@ class InvertedIndex:
   ###
   def cosine_comparison(self, v1, v2):
     # Normally, some sanity checking should be done here.  For example are both
-    # vectors of the same length?  Appropriate type?  Etc.
-  	n = len(v1)
+    # vectors of the same length?  Appropriate type?  Etc. 
+    n = len(v1)
   	
   	# Cosine between two vectors is their dot product divided by the product of magnitudes
-  	dot_prod = 0.0
-  	len1 = 0.0
-  	len2 = 0.0
-  	for i in range(n):
-  	  dot_prod += v1[i] * v2[i]
-  	  len1 += v1[i] * v1[i]
-  	  len2 += v2[i] * v2[i]
+    dot_prod = 0.0
+    len1 = 0.0
+    len2 = 0.0
+    for i in range(n):
+      dot_prod += v1[i] * v2[i]
+      len1 += v1[i] * v1[i]
+      len2 += v2[i] * v2[i]
   	  
-  	len1 = math.sqrt(len1)
-  	len2 = math.sqrt(len2)
+    len1 = math.sqrt(len1)
+    len2 = math.sqrt(len2)
   	
-  	return dot_prod / (len1 * len2)
+    return dot_prod / (len1 * len2)
   	  
   ##
   # Calculates the TFIDF values for the current lexicon for future use.
@@ -663,7 +663,7 @@ class InvertedIndex:
           tfidf = item[1] * invDocFreq
           item[2] = tfidf
         except StopIteration: 
-      	  break
+          break
 
   ##
   # Calculates the LogEntropy values for the current lexicon for future use.
@@ -675,6 +675,7 @@ class InvertedIndex:
   # ~~~~~~~~~~~~~~~~~
   # 06/09/2022 - Created (CJL).
   ###
+  
   def calcLogEntropy(self):
     docs = self.get_total_docs()
     if docs < 2:
@@ -757,5 +758,3 @@ class InvertedIndex:
       llist = t[1]
       print("--> Document list for : " + t[0])
       llist.print_list()
-
-
