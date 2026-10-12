@@ -421,7 +421,6 @@ class InvertedIndex:
     results = [ ]
     for i in range(self.get_total_docs()):
       v = self.get_doc_vector(i)
-      # These branches work like an if / else if chain in C++.
       if comparison == "cosine":
         score = self.cosine_comparison(qv, v)
       elif comparison == "euclidean":
@@ -438,7 +437,7 @@ class InvertedIndex:
         raise ValueError(comparison + " is undefined for " + self.docs[i])
       results.append((self.docs[i], score))
       
-    # A pair is like std::pair<string, double>; position 1 contains its score.
+    # Sort each (document name, score) pair by its score.
     def get_score(result):
       return result[1]
 
@@ -683,7 +682,7 @@ class InvertedIndex:
 
     self.log_entropy_weights = []
 
-    # 'for term in self.terms' is like a C++ range-based for loop.
+    # Calculate one global entropy factor per term.
     for term in self.terms:
       postings = term[1]
       total_frequency = term[2]
@@ -704,10 +703,9 @@ class InvertedIndex:
         local_weight = math.log(1 + posting[1])
         posting[3] = local_weight * global_weight
 
-  # Part B: simple comparison functions. A Python list works like vector<double>.
+  # Part B: vector comparison operators.
   def euclidean_comparison(self, v1, v2):
     squared_distance = 0.0
-    # range(len(v1)) is like: for (int i = 0; i < v1.size(); i++).
     for i in range(len(v1)):
       difference = v1[i] - v2[i]
       squared_distance += difference * difference

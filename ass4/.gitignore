@@ -1,6 +1,4 @@
-# Local notes and temporary setup files.
-TEAMMATE_2.md
-temp dont push
+# Local environments and downloaded data.
 .venv/
 venv/
 nltk_data/
@@ -12,7 +10,3 @@ __pycache__/
 .DS_Store
 __MACOSX/
 
-# Local assistant configuration.
-.agents/
-.codex/
-.aws/

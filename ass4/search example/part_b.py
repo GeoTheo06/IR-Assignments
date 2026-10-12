@@ -1,4 +1,4 @@
-"""Run the assignment experiments. Import these helpers from the notebook too."""
+"""Run the vector comparison experiments for Assignment 4."""
 
 from pathlib import Path
 from inverted_index import InvertedIndex
@@ -11,7 +11,7 @@ OPERATORS = ["euclidean", "pearson", "spearman", "manhattan"]
 
 
 def build_index():
-    # Find the data next to this file, even if you run Python from another folder.
+    # Locate the Shakespeare collection relative to this module.
     folder = Path(__file__).parent / "shakespeare"
     documents = read_data(str(folder))
     documents.sort()  # Use a repeatable document order.
@@ -27,7 +27,6 @@ def build_index():
 
 
 def run_experiment(index, weighting, comparison):
-    # Python False/True are the same idea as C++ false/true.
     use_tfidf = False
     use_log_entropy = False
 
@@ -40,7 +39,7 @@ def run_experiment(index, weighting, comparison):
     elif weighting != "TF":
         raise ValueError("Unknown weighting: " + weighting)
 
-    # The matrix and query must use the SAME weighting flags.
+    # Use matching document and query weights.
     index.generate_term_by_doc_matrix(
         tfidf=use_tfidf, log_entropy=use_log_entropy
     )
@@ -61,14 +60,13 @@ def run_experiment(index, weighting, comparison):
     for i in range(min(10, len(results))):
         document = results[i][0]
         score = results[i][1]
-        # f-strings insert values into text; .6f prints six decimal places.
         print(f"{i + 1:<6} {document:<40} {score:>14.6f}")
 
     return results
 
 
 def run_all_experiments(index):
-    # A dict is similar to std::map. The key is (weighting, operator).
+    # Store full rankings by weighting scheme and operator.
     all_results = {}
     for weighting in WEIGHTINGS:
         for comparison in OPERATORS:
@@ -81,11 +79,10 @@ def find_rank(results, document_name):
     for i in range(len(results)):
         if results[i][0] == document_name:
             return i + 1
-    return None  # Like an optional value with no result.
+    return None
 
 
-# Python's equivalent of a main() entry point.
-# This block runs when you execute the file, but not when the notebook imports it.
+# Run all twelve comparison experiments.
 if __name__ == "__main__":
     index = build_index()
     run_all_experiments(index)
