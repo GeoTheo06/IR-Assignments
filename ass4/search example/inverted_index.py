@@ -25,6 +25,8 @@ from nltk.stem.porter import PorterStemmer
 from collections import Counter
 import math
 import re
+import numpy as np
+from scipy import stats
 
 class InvertedIndex:
   ##
@@ -188,7 +190,7 @@ class InvertedIndex:
     t = [w for w in t if not w in self.stop_words]
 
     # Get rid of punctuation and non words
-    t = [re.sub('[^\w]', "", w) for w in t]
+    t = [re.sub(r'[^\w]', "", w) for w in t]
     
     # If our process above came across something purely not word oriented
     # (for example "--" then we may have empty strings, get rid of those)
@@ -393,17 +395,24 @@ class InvertedIndex:
   #                the term/doc matrix should be already generated at this point
   #                and you should use the same setting as that.
   #
-  # @return A list of tuples (x, y) where X is the document name and y is the cosine
-  #         similarity score.  This is sorted by similarity score.
+  # @param comparison - "cosine", "euclidean", "pearson", "spearman", or "manhattan".
+  # @return A list of (document name, score) pairs, best result first.
   #
   # Revision History:
   # ~~~~~~~~~~~~~~~~~
   # 23/04/2021 - Created (CJL).
   ###
-  def search(self, q, tfidf = False, log_entropy = False):
+  def search(self, q, tfidf = False, log_entropy = False, comparison = "cosine"):
     # Sanity check flags
     if tfidf and log_entropy:
       raise Exception("[search]:  Error, both tfidf and log_entropy can't both be True.")
+
+    if self.A is None:
+      raise ValueError("Build the term-by-document matrix before searching.")
+
+    operators = ["cosine", "euclidean", "pearson", "spearman", "manhattan"]
+    if comparison not in operators:
+      raise ValueError("Unknown comparison operator: " + comparison)
 
     # First, process the query and turn it into an appropriate vector representation
     qv = self.create_query_vector(q, tfidf, log_entropy)
@@ -412,11 +421,32 @@ class InvertedIndex:
     results = [ ]
     for i in range(self.get_total_docs()):
       v = self.get_doc_vector(i)
-      cos = self.cosine_comparison(qv, v)
-      results.append((self.docs[i], cos))
+      # These branches work like an if / else if chain in C++.
+      if comparison == "cosine":
+        score = self.cosine_comparison(qv, v)
+      elif comparison == "euclidean":
+        score = self.euclidean_comparison(qv, v)
+      elif comparison == "pearson":
+        score = self.pearson_comparison(qv, v)
+      elif comparison == "spearman":
+        score = self.spearman_comparison(qv, v)
+      else:
+        score = self.manhattan_comparison(qv, v)
+
+      # Correlation is undefined for constant vectors. Stop instead of ranking NaN.
+      if not math.isfinite(score):
+        raise ValueError(comparison + " is undefined for " + self.docs[i])
+      results.append((self.docs[i], score))
       
-    # sort list of tuples on cosine value - ranked search
-    results.sort(key=lambda x:x[1], reverse = True)
+    # A pair is like std::pair<string, double>; position 1 contains its score.
+    def get_score(result):
+      return result[1]
+
+    # Distances: smaller is better. Similarities/correlations: larger is better.
+    if comparison == "euclidean" or comparison == "manhattan":
+      results.sort(key = get_score)
+    else:
+      results.sort(key = get_score, reverse = True)
     
     return results
     
@@ -540,13 +570,10 @@ class InvertedIndex:
     empty = True
     for t in q:
       # First find its location
-      try:
-        _, t_ind = self.search_for_term(t)
+      _, t_ind = self.binary_search_for_term(t)
+      if t_ind is not None:
         v[t_ind] += 1.0
         empty = False
-      except:
-        # If we get here, it's not in our lexicon
-        pass
         
     # Sanity check, if query vector is empty (that is, there is no matching terms
     # in our lexicon) we should appropriately freak out.
@@ -676,6 +703,31 @@ class InvertedIndex:
       for posting in LinkedListIterator(postings):
         local_weight = math.log(1 + posting[1])
         posting[3] = local_weight * global_weight
+
+  # Part B: simple comparison functions. A Python list works like vector<double>.
+  def euclidean_comparison(self, v1, v2):
+    squared_distance = 0.0
+    # range(len(v1)) is like: for (int i = 0; i < v1.size(); i++).
+    for i in range(len(v1)):
+      difference = v1[i] - v2[i]
+      squared_distance += difference * difference
+    return math.sqrt(squared_distance)
+
+  def pearson_comparison(self, v1, v2):
+    correlations = np.corrcoef(v1, v2)
+    # corrcoef returns a 2-by-2 matrix. [0][1] compares v1 with v2.
+    return float(correlations[0][1])
+
+  def spearman_comparison(self, v1, v2):
+    result = stats.spearmanr(v1, v2)
+    # The result contains a coefficient and a p-value. Ranking uses the coefficient.
+    return float(result.statistic)
+
+  def manhattan_comparison(self, v1, v2):
+    distance = 0.0
+    for i in range(len(v1)):
+      distance += abs(v1[i] - v2[i])
+    return distance
 
 ### Debugging random junk below
 
