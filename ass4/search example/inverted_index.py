@@ -87,6 +87,9 @@ class InvertedIndex:
     # calculations.  This will have to be created "on demand"
     self.A = None
 
+    # One global entropy weight per term. Both documents and queries reuse it.
+    self.log_entropy_weights = []
+
   ##
   # Adds a document to the InvertedIndex class.
   #
@@ -113,6 +116,9 @@ class InvertedIndex:
     # Tokenize and process text.  This is where any text pre-processing
     # will take place.
     p_text = self.process_text(text)
+    # Adding a document changes the collection statistics and matrix.
+    self.A = None
+    self.log_entropy_weights = []
     self.docs.append(doc_id)
     
     # Returns collection dictionary Counter({'term1' : x_1, 'term2' : x_2, ...})
@@ -562,9 +568,14 @@ class InvertedIndex:
           invDocFreq = math.log(total_docs / docFreq)
           v[x] = value * invDocFreq
 
-    # TODO:  Need to fill this in
     if log_entropy is True:
-      pass
+      if len(self.log_entropy_weights) != self.get_total_terms():
+        raise ValueError("Call calcLogEntropy() before creating a Log-Entropy query.")
+
+      for i in range(self.get_total_terms()):
+        query_frequency = v[i]
+        local_weight = math.log(1 + query_frequency)
+        v[i] = local_weight * self.log_entropy_weights[i]
         
     return v
     
@@ -640,10 +651,31 @@ class InvertedIndex:
   ###
   def calcLogEntropy(self):
     docs = self.get_total_docs()
-    terms = self.get_total_terms()
+    if docs < 2:
+      raise ValueError("Log-Entropy needs at least two documents because log(1) is zero.")
 
-    # TODO
-    pass
+    self.log_entropy_weights = []
+
+    # 'for term in self.terms' is like a C++ range-based for loop.
+    for term in self.terms:
+      postings = term[1]
+      total_frequency = term[2]
+      entropy_sum = 0.0
+
+      # A posting is [document name, frequency, TF-IDF weight, Log-Entropy weight].
+      # Only documents containing the term have postings, so p is always positive.
+      # Absent documents contribute zero to this sum.
+      for posting in LinkedListIterator(postings):
+        frequency = posting[1]
+        p = frequency / total_frequency
+        entropy_sum += p * math.log(p)
+
+      global_weight = 1 + entropy_sum / math.log(docs)
+      self.log_entropy_weights.append(global_weight)
+
+      for posting in LinkedListIterator(postings):
+        local_weight = math.log(1 + posting[1])
+        posting[3] = local_weight * global_weight
 
 ### Debugging random junk below
 
